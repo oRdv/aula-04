@@ -155,22 +155,30 @@ function mostrarMultiplos3() {
     function mostrarNumerosPrimos() {
         const numeros = document.getElementById('numeros').value.split(',')
         const container = document.getElementById('container-numeros-mutiplicar-primos')
-    
         container.replaceChildren('')
         const ultimoIndice = numeros.length
     
-        if (numeros != '') {
-            for (let contador = 0; contador < ultimoIndice; contador++) {
-                if (numeros[contador] % 1 == 0 || numeros[contador] % numeros[contador] == 0) {
-                    const novoSpan = document.createElement('span')
-                    novoSpan.textContent = numeros[contador]
-                    container.appendChild(novoSpan)
-    
-                }
+        function primo(numero) {
+            if (numero <= 1) return false;
+            for (let i = 2; i <= Math.sqrt(numero); i++) {
+                if (numero % i === 0) return false;
             }
+            return true;
+        }
+    
+        for (let contador = 0; contador < numeros.length; contador++) {
+            let numero = parseInt(numeros[contador]) + 1;
+    
+            while (!primo(numero)) {
+                numero++;
+            }
+    
+            const novoSpan = document.createElement('span');
+            novoSpan.textContent = numero;
+            container.appendChild(novoSpan);
         }
     }
-
+    
 
 botaoMostarTodosNumeros.addEventListener('click', mostrarTodosNumeros)
 botaoMostarTodosPares.addEventListener('click', mostrarNumerosPares)
